@@ -1,20 +1,16 @@
 [project]
 name = "expense-tracker-api"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Personal Expense Tracker REST API built with FastAPI, SQLAlchemy and PostgreSQL"
 readme = "README.md"
 requires-python = ">=3.13.1"
 dependencies = [
-    "alembic>=1.19.1",
     "bcrypt>=5.0.0",
     "fastapi[standard]>=0.141.1",
     "httpx>=0.28.1",
-    "passlib>=1.7.4",
     "psycopg[binary]>=3.3.4",
-    "pwdlib[argon2]>=0.3.1",
     "pydantic-settings>=2.15.0",
     "pyjwt>=2.13.0",
     "pytest>=9.1.1",
-    "python-jose[cryptograhy]>=3.5.0",
     "sqlalchemy>=2.0.52",
 ]

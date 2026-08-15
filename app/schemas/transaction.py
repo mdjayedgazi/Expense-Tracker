@@ -1,16 +1,19 @@
-from datetime import date
+from datetime import date as Date
 from enum import StrEnum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TransactionType(StrEnum):
-    REVENUE = "revenue"
-    EXPENDITURE = "expenditure"
+    """Allowed transaction types."""
 
-# Transaction Create Schemas
+    INCOME = "income"
+    EXPENSE = "expense"
+
 
 class TransactionCreate(BaseModel):
+    """Request body for creating a transaction."""
+
     title: str = Field(
         ...,
         min_length=2,
@@ -19,7 +22,8 @@ class TransactionCreate(BaseModel):
         examples=["Monthly salary"],
     )
 
-    amount: float | int = Field(
+    # Pydantic validates that the amount is a positive number.
+    amount: float = Field(
         ...,
         gt=0,
         le=5_000_000,
@@ -27,10 +31,11 @@ class TransactionCreate(BaseModel):
         examples=[50000],
     )
 
+    # Pydantic only accepts "income" or "expense" here.
     type: TransactionType = Field(
         ...,
         description="Transaction type",
-        examples=["revenue"],
+        examples=["income"],
     )
 
     category: str | None = Field(
@@ -40,16 +45,16 @@ class TransactionCreate(BaseModel):
         examples=["Food"],
     )
 
-    date: date = Field(
+    date: Date = Field(
         ...,
         description="Transaction date",
         examples=["2026-08-15"],
     )
 
 
-# Transaction Update Schemas
-
 class TransactionUpdate(BaseModel):
+    """Request body for updating a transaction. All fields are optional."""
+
     title: str | None = Field(
         default=None,
         min_length=2,
@@ -69,7 +74,7 @@ class TransactionUpdate(BaseModel):
     type: TransactionType | None = Field(
         default=None,
         description="Transaction type",
-        examples=["revenue"],
+        examples=["income"],
     )
 
     category: str | None = Field(
@@ -79,8 +84,22 @@ class TransactionUpdate(BaseModel):
         examples=["Food"],
     )
 
-    date:  date | None = Field(
+    date: Date | None = Field(
         default=None,
         description="Transaction date",
         examples=["2026-08-15"],
     )
+
+
+class TransactionResponse(BaseModel):
+    """Transaction returned to the client."""
+
+    id: int
+    title: str
+    amount: float
+    type: TransactionType
+    category: str | None
+    date: Date
+    owner_id: int
+
+    model_config = ConfigDict(from_attributes=True)
