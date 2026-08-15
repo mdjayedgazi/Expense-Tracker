@@ -3,11 +3,13 @@ from datetime import date
 from sqlalchemy import Date, Float, ForeignKey, Identity, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.base import Base
-from app.users.models import User
+from app.core.database import Base
+from app.models.user import User
 
 
 class Transaction(Base):
+    """An income or expense entry owned by a user."""
+
     __tablename__ = "transactions"
 
     id: Mapped[int] = mapped_column(
@@ -20,11 +22,12 @@ class Transaction(Base):
         nullable=False,
     )
 
-    amount: Mapped[float | int] = mapped_column(
+    amount: Mapped[float] = mapped_column(
         Float,
         nullable=False,
     )
 
+    # "income" or "expense".
     type: Mapped[str] = mapped_column(
         String(7),
         nullable=False,
@@ -40,6 +43,7 @@ class Transaction(Base):
         nullable=False,
     )
 
+    # Every transaction belongs to exactly one user.
     owner_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
         nullable=False,
