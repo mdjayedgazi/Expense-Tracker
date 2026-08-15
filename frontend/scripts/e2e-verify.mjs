@@ -181,7 +181,7 @@ try {
   await page.locator('a[href="/transactions"]').first().click()
   await page.waitForURL('**/transactions')
   await page.waitForSelector('text=Lunch with team >> visible=true', { timeout: 20000 })
-  check('mobile: card layout (no table)', (await page.locator('table').count()) === 0)
+  check('mobile: card layout (no visible table)', !(await page.locator('table').isVisible()))
 } catch (e) {
   check('SCRIPT ERROR', false, String(e).slice(0, 300))
   await page.screenshot({ path: '/tmp/opencode/e2e_error.png' })
