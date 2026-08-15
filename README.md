@@ -94,6 +94,7 @@ There is no service or repository layer — database logic lives directly in the
 | `SECRET_KEY` | Random secret used to sign JWT tokens. Generate with `python -c "import secrets; print(secrets.token_hex(32))"` |
 | `ALGORITHM` | JWT signing algorithm, e.g. `HS256` |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Token lifetime in minutes (default `30`) |
+| `CORS_ORIGINS` | Comma-separated list of allowed frontend origins, e.g. `https://app.example.com,http://localhost:5173` |
 
 Never commit the real `.env` file.
 

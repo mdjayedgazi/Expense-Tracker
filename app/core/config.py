@@ -9,8 +9,8 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     # Comma-separated list of allowed frontend origins.
-    # Empty value (or "*") allows all origins — fine for development.
-    CORS_ORIGINS: str = ""
+    # Local default; override with the deployed frontend URL in production.
+    CORS_ORIGINS: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(
         env_file=".env",
